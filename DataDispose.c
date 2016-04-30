@@ -1,6 +1,7 @@
 #include<unistd.h>
 #include<fcntl.h>
 #include<sys/stat.h>
+#include<string.h>
 #include<hiredis/hiredis.h>
 int main()
 {
@@ -13,6 +14,7 @@ int main()
 	fd = open("../NFS_dir/log.txt",O_WRONLY | O_CREAT | O_APPEND,S_IRWXU | S_IRWXG | S_IRWXO);
 	while(1)
 	{
+		memset(redis+4,0,1020);
 		length = 0;
 		read(0,lengthbuffer,4);
 		
@@ -44,8 +46,9 @@ int main()
 		}
 	
 		freeReplyObject(reply);
-	
-		write(fd,redis+4,length);
+		
+		redis[length+4]='\n';
+		write(fd,redis+4,length+1);
 		write(1,redis,1);
 	}	
 }

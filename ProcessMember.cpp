@@ -7,11 +7,10 @@
 
 int ProcessMember::TryToSendMessage(const char * const  buffer,int length)
 {
-	char buffer2[1024];
+	char buffer2[1024] = {'\0'};
 	sprintf(buffer2,"%d",length);
 	strcpy(buffer2+4,buffer);
-
-	return write(fd_write_,buffer,length+4);
+	return write(fd_write_,buffer2,length+4);
 }
 ProcessMember::ProcessMember()
 {
