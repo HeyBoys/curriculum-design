@@ -78,14 +78,15 @@ void ProcessPond::PipeEpollEventsRegister(int epoll_fd)
 }
 void ProcessPond::ClearProcessLoad(int fd)
 {
-	char buffer;
+	char buffer[1024];
+	int n;
 	for(int i = 0;i<5;i++)
 	{
 		if(fd == member[i].get_fd_read())
 		{
-			read(fd,&buffer,1);
-			member[i].load--;
-			
+			n = read(fd,buffer,1024);
+			member[i].load-=n;
+			break;
 		}
 	}
 }

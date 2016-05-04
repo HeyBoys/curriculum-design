@@ -69,7 +69,7 @@ void UdpServer::run()
 				}
 				else //是子进程发送数据，表明做完一次工作
 				{
-					pond->ClearProcessLoad(ev[i].data.fd);//该进程负载-1
+					pond->ClearProcessLoad(ev[i].data.fd);//该进程负载减去做完的工作
 				}
 		}
 	}
